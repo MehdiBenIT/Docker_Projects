@@ -8,12 +8,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - DB_TYPE=sqlite #optional
-      - DB_HOST= #optional
-      - DB_PORT= #optional
-      - DB_NAME= #optional
-      - DB_USER= #optional
-      - DB_PASS= #optional
     volumes:
       - /path/to/config:/config
       - /path/to/data:/data
