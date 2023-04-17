@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    depends_on:
+      - db
+      - redis
+    env_file: secrets.env
+    ports:
+      - 8998:80
+      - 4343:443
+    environment:
+      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_DOMAIN:-nextcloud.local}
+      - NEXTCLOUD_DB_TYPE=mysql
+      - NEXTCLOUD_DB_HOST=db
+      - NEXTCLOUD_DB_NAME=nextcloud
+      - NEXTCLOUD_DB_USER=nextcloud
+      - NEXTCLOUD_DB_PASSWORD=${NEXTCLOUD_DB_PASSWORD}
+      - NEXTCLOUD_REDIS_HOST=redis
+    volumes:
+      - nextcloud-data:/var/www/html
+    networks:
+      - nextcloud
+    restart: unless-stopped
+
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    env_file: secrets.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=${NEXTCLOUD_DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - nextcloud
+    restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    networks:
+      - nextcloud
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+networks:
+  nextcloud:
+
+volumes:
+  nextcloud-data:
+  db-data:
+  redis-data:
