@@ -4,15 +4,7 @@ ENV NEXTCLOUD_UPDATE=1
 CMD ["/usr/bin/supervisord"]
 
 RUN apt update
-
-RUN echo "hello"
-
-RUN ls "/var/www/"
-
-RUN "ls /var/www/nextcloud"
-
 RUN "cd /var/www/nextcloud/"
-
 RUN "sudo -u www-data php occ  maintenance:install \
 --database='mysql' --database-name='nextcloud' \
 --database-user='root' --database-pass='qwerty123' \
