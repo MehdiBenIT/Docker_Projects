@@ -10,8 +10,6 @@ services:
       - APP_URL=
       - DB_HOST=bookstack_db
       - DB_PORT=3306
-      - DB_USER=bookstack
-      - DB_PASS=azerty123
       - DB_DATABASE=bookstackapp
     volumes:
       - /path/to/data:/config
