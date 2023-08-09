@@ -2,6 +2,5 @@
 version: '3'
 services:
   guaca:
-
   guaca-db:
   

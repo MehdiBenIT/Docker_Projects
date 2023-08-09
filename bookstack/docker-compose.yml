@@ -28,7 +28,6 @@ services:
       - TZ=Europe/London
       - MYSQL_DATABASE=bookstackapp
       - MYSQL_USER=bookstack
-      - MYSQL_PASSWORD=azerty123
     volumes:
       - /path/to/data:/config
     restart: unless-stopped
